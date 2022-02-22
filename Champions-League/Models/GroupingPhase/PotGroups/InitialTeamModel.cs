@@ -1,4 +1,4 @@
-namespace SemihCelek.Champions_League.Models.GroupingPhase
+namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
 {
     public class InitialTeamModel
     {
