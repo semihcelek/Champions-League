@@ -1,6 +1,6 @@
 using SemihCelek.Champions_League.Models.GroupingPhase.PotGroups;
 
-namespace SemihCelek.Champions_League.Models.GroupingPhase
+namespace SemihCelek.Champions_League.Models.GroupingPhase.DrawGroups
 {
     public interface IGroupDistributeController
     {

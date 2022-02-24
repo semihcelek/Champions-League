@@ -5,6 +5,12 @@ namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
 {
     public class TeamPotAdjuster
     {
+        public List<List<InitialTeamModel>> RandomizedPotList
+        {
+            get => _randomizedPotList;
+            set => _randomizedPotList = value;
+        }
+        
         private List<InitialTeamModel> _initialTeamList;
 
         private List<List<InitialTeamModel>> _potList;
@@ -19,15 +25,19 @@ namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
             _initialTeamList = teamDataExtractor.ExtractTeams();
 
             _potList = new List<List<InitialTeamModel>>();
-            _randomizedPotList = new List<List<InitialTeamModel>>();
+            RandomizedPotList = new List<List<InitialTeamModel>>();
+
+            AdjustTeamPots();
         }
+
+
 
         private void CategorizeTeamsWithTheirSeedPoints()
         {
-            List<InitialTeamModel> pot1 = _initialTeamList.FindAll(team => team.TeamSeedPoint == 1);
-            List<InitialTeamModel> pot2 = _initialTeamList.FindAll(team => team.TeamSeedPoint == 2);
-            List<InitialTeamModel> pot3 = _initialTeamList.FindAll(team => team.TeamSeedPoint == 3);
-            List<InitialTeamModel> pot4 = _initialTeamList.FindAll(team => team.TeamSeedPoint == 4);
+            List<InitialTeamModel> pot1 = _initialTeamList.FindAll(team => team.TeamSeedPoint.Equals(1));
+            List<InitialTeamModel> pot2 = _initialTeamList.FindAll(team => team.TeamSeedPoint.Equals(2));
+            List<InitialTeamModel> pot3 = _initialTeamList.FindAll(team => team.TeamSeedPoint.Equals(3));
+            List<InitialTeamModel> pot4 = _initialTeamList.FindAll(team => team.TeamSeedPoint.Equals(4));
 
             _potList.Add(pot1);
             _potList.Add(pot2);
@@ -35,16 +45,17 @@ namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
             _potList.Add(pot4);
         }
 
-        public List<List<InitialTeamModel>> AdjustTeamPots()
+        private List<List<InitialTeamModel>> AdjustTeamPots()
         {
             CategorizeTeamsWithTheirSeedPoints();
-            _randomizedPotList = _potRandomizer.RandomizePotGroups(_potList);
-            return _randomizedPotList;
+            RandomizedPotList = _potRandomizer.RandomizePotGroups(_potList);
+            return RandomizedPotList;
         }
 
-        private void ShowPots()
+        // Remove this method, or move to view.
+        public void ShowPots()
         {
-            foreach (List<InitialTeamModel> teamPotList in _randomizedPotList)
+            foreach (List<InitialTeamModel> teamPotList in RandomizedPotList)
             {
                 foreach (InitialTeamModel teamModel in teamPotList)
                 {

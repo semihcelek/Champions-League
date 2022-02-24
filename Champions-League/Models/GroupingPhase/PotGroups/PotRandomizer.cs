@@ -12,12 +12,13 @@ namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
 
         public List<List<InitialTeamModel>> RandomizePotGroups(List<List<InitialTeamModel>> potList)
         {
+            List<List<InitialTeamModel>> randomizedPots = new List<List<InitialTeamModel>>();
             for (int i = 0; i <= 3; i++)
             {
-                potList[i] = ShufflePotGroups(potList[i]);
+                randomizedPots.Add(ShufflePotGroups(potList[i]));
             }
 
-            return potList;
+            return randomizedPots;
         }
     }
 }

@@ -14,12 +14,12 @@ namespace SemihCelek.Champions_League.Models.GroupingPhase.PotGroups
         {
             _teamDataAccess = teamDataAccess;
             _teamList = new List<InitialTeamModel>();
-            ExtractTeams();
         }
 
         public List<InitialTeamModel> ExtractTeams()
         {
-            foreach (var line in _teamDataAccess.ReadLines())
+            List<string> teamData = _teamDataAccess.ReadLines();
+            foreach (var line in teamData)
             {
                 string[] spaceSeparatedTeamData = line.Split(" ");
 
