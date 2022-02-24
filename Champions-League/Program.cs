@@ -1,9 +1,11 @@
 ﻿using System;
+using SemihCelek.Champions_League.Controllers;
 using SemihCelek.Champions_League.Models.DataAccess;
 using SemihCelek.Champions_League.Models.GroupingPhase;
 using SemihCelek.Champions_League.Models.GroupingPhase.DrawGroups;
 using SemihCelek.Champions_League.Models.GroupingPhase.PotGroups;
 using SemihCelek.Champions_League.Utils;
+using SemihCelek.Champions_League.Views.DrawViews;
 
 namespace SemihCelek.Champions_League
 {
@@ -12,27 +14,35 @@ namespace SemihCelek.Champions_League
         private static void Main(string[] args)
         {
             IDataPathFinder dataPathFinder = new DataPathFinder();
+            
             IDataAccess groupDataAccess = new GroupDataAccess(dataPathFinder);
+            
             TeamDataExtractor teamDataExtractor = new TeamDataExtractor(groupDataAccess);
+            
             IPotRandomizer potRandomizer = new PotRandomizer();
 
             TeamPotAdjuster teamPotAdjuster = new TeamPotAdjuster(teamDataExtractor, potRandomizer);
 
             TeamModelConverter teamModelConverter = new TeamModelConverter();
-            GroupController groupController = new GroupController();
+            
+            GroupManager groupManager = new GroupManager();
 
             IGroupDistributeController groupDistributeController =
-                new GroupDistributeController(teamModelConverter, groupController.CompetingGroups);
+                new GroupDistributeController(teamModelConverter, groupManager.CompetingGroups);
+            
             // Draw
-            TitleHolderTeamsDraw titleHolderTeamsDraw =
+            ITeamDraw titleHolderTeamsDraw =
                 new TitleHolderTeamsDraw(teamPotAdjuster, groupDistributeController);
+            
+            ITeamDraw remainingTeamsDraw = 
+                new RemainingTeamsDraw(teamPotAdjuster, groupDistributeController);
 
-            RemainingTeamsDraw remainingTeamsDraw = new RemainingTeamsDraw(teamPotAdjuster, groupDistributeController);
+            DrawController titleHolderTeamsDrawController = new DrawController(titleHolderTeamsDraw);
+            DrawController remainingTeamsDrawController = new DrawController(remainingTeamsDraw);
 
-            // teamPotAdjuster.ShowPots();
+            DrawSelectionView drawSelectionView = new DrawSelectionView(titleHolderTeamsDrawController, remainingTeamsDrawController);
 
-            titleHolderTeamsDraw.DistributeTeamsToGroups();
-            remainingTeamsDraw.DistributeTeamsToGroups();
+            drawSelectionView.CreateView();
         }
     }
 }

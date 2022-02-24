@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using SemihCelek.Champions_League.Controllers;
 using SemihCelek.Champions_League.Models.GroupingPhase.PotGroups;
 
 namespace SemihCelek.Champions_League.Models.GroupingPhase.DrawGroups
 {
-    public class TitleHolderTeamsDraw
+    public class TitleHolderTeamsDraw : ITeamDraw
     {
         // use struct for storing both group name on char and InitialTeamModel
 

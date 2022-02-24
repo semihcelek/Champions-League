@@ -6,9 +6,4 @@
         <RootNamespace>SemihCelek.Champions_League</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-      <Folder Include="Controllers" />
-      <Folder Include="Views" />
-    </ItemGroup>
-
 </Project>

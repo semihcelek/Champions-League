@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using SemihCelek.Champions_League.Controllers;
 using SemihCelek.Champions_League.Models.GroupingPhase.PotGroups;
 
 namespace SemihCelek.Champions_League.Models.GroupingPhase.DrawGroups
 {
-    public class RemainingTeamsDraw
+    public class RemainingTeamsDraw : ITeamDraw
     {
         private TeamPotAdjuster _teamPotAdjuster;
         
